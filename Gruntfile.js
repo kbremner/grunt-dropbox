@@ -35,7 +35,7 @@ module.exports = function(grunt) {
           version_name: process.env.TRAVIS_BUILD_ID
         },
         files: {
-          'builds': ['dist/*']
+          'grunt-dropbox': ['dist/*']
         }
       }
     },
