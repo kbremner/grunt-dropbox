@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Grunt-dropbox by kbremner</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/kbremner/grunt-dropbox">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/kbremner/grunt-dropbox/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/kbremner/grunt-dropbox/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Grunt-dropbox</h1>
+          <p>Grunt plugin for uploading build artifacts to dropbox</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/kbremner">kbremner</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="grunt-dropbox" class="anchor" href="#grunt-dropbox"><span class="octicon octicon-link"></span></a>grunt-dropbox</h1>
+
+<blockquote>
+<p>Grunt plugin for uploading build artifacts to dropbox</p>
+</blockquote>
+
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>This plugin requires Grunt <code>~0.4.5</code></p>
+
+<p>If you haven't used <a href="http://gruntjs.com/">Grunt</a> before, be sure to check out the <a href="http://gruntjs.com/getting-started">Getting Started</a> guide, as it explains how to create a <a href="http://gruntjs.com/sample-gruntfile">Gruntfile</a> as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:</p>
+
+<pre lang="shell"><code>npm install grunt-dropbox --save-dev
+</code></pre>
+
+<p>Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-dropbox'</span><span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="the-dropbox-task" class="anchor" href="#the-dropbox-task"><span class="octicon octicon-link"></span></a>The "dropbox" task</h2>
+
+<h3>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h3>
+
+<p>In your project's Gruntfile, add a section named <code>dropbox</code> to the data object passed into <code>grunt.initConfig()</code>.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="nx">dropbox</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// Task-specific options go here.</span>
+    <span class="p">},</span>
+    <span class="nx">your_target</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// Target-specific file lists and/or options go here.</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
+
+<h4>
+<a name="optionsseparator" class="anchor" href="#optionsseparator"><span class="octicon octicon-link"></span></a>options.separator</h4>
+
+<p>Type: <code>String</code>
+Default value: <code>',  '</code></p>
+
+<p>A string value that is used to do something with whatever.</p>
+
+<h4>
+<a name="optionspunctuation" class="anchor" href="#optionspunctuation"><span class="octicon octicon-link"></span></a>options.punctuation</h4>
+
+<p>Type: <code>String</code>
+Default value: <code>'.'</code></p>
+
+<p>A string value that is used to do something else with whatever else.</p>
+
+<h3>
+<a name="usage-examples" class="anchor" href="#usage-examples"><span class="octicon octicon-link"></span></a>Usage Examples</h3>
+
+<h4>
+<a name="default-options" class="anchor" href="#default-options"><span class="octicon octicon-link"></span></a>Default Options</h4>
+
+<p>In this example, the default options are used to do something with whatever. So if the <code>testing</code> file has the content <code>Testing</code> and the <code>123</code> file had the content <code>1 2 3</code>, the generated result would be <code>Testing, 1 2 3.</code></p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="nx">dropbox</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{},</span>
+    <span class="nx">files</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s1">'dest/default_options'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'src/testing'</span><span class="p">,</span> <span class="s1">'src/123'</span><span class="p">],</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4>
+<a name="custom-options" class="anchor" href="#custom-options"><span class="octicon octicon-link"></span></a>Custom Options</h4>
+
+<p>In this example, custom options are used to do something else with whatever else. So if the <code>testing</code> file has the content <code>Testing</code> and the <code>123</code> file had the content <code>1 2 3</code>, the generated result in this case would be <code>Testing: 1 2 3 !!!</code></p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="nx">dropbox</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">separator</span><span class="o">:</span> <span class="s1">': '</span><span class="p">,</span>
+      <span class="nx">punctuation</span><span class="o">:</span> <span class="s1">' !!!'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="nx">files</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s1">'dest/default_options'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'src/testing'</span><span class="p">,</span> <span class="s1">'src/123'</span><span class="p">],</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
+
+<h2>
+<a name="release-history" class="anchor" href="#release-history"><span class="octicon octicon-link"></span></a>Release History</h2>
+
+<p><em>(Nothing yet)</em></p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
