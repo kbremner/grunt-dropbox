@@ -26,19 +26,24 @@ module.exports = function(grunt) {
     
     verifyOptions(options);
     
-    dropboxClient.getAccountInfo(options, function(resp) {
+    dropboxClient.getAccountInfo(options, function(err, resp) {
+      if(err) {
+        done();
+        throw err;
+      }
+
       grunt.log.writeln("Uploading to dropbox account for " + resp.display_name + "...");
       
       task.files.forEach(function(f) {
-        f.src.filter(filterExists).map(function(filepath) {
+        f.src.filter(isFile).map(function(filepath) {
           // mark that an upload has started by incrementing an in-flight count
           count += 1;
           
           // get the name of the file and construct the url for uploading it
           var filename = getFilename(filepath);
-          var dropboxPath = f.dest + "/" + options.version_name + "/" + filename;
+          var dropboxPath = f.dest + "/" + options.version_name + "/" + filepath;
               
-          grunt.log.writeln("uploading " + filepath + " to " + dropboxPath + "...");
+          grunt.log.writeln("Uploading " + filepath + " to " + dropboxPath + "...");
           
           // read the file and start the upload, decrementing the in-flight count when complete
           // Use encoding = null to keep the file as a Buffer
@@ -48,8 +53,12 @@ module.exports = function(grunt) {
             fileBuffer: grunt.file.read(filepath, { encoding : null })
           }
           
-          dropboxClient.upload(reqOptions, function(resp) {
-            grunt.log.writeln(filename + " finished");
+          dropboxClient.upload(reqOptions, function(err, resp) {
+            if(err) {
+              done();
+              throw err;
+            }
+            grunt.log.writeln(filename + " uploaded.");
             count -= 1;
           });
         });
@@ -59,7 +68,7 @@ module.exports = function(grunt) {
       var timeout = 1000;
       function waitForUpload() {
         if(count === 0) {
-          grunt.log.writeln("all uploads complete");
+          grunt.log.writeln("All uploads complete.");
           done();
         } else {
         	setTimeout(waitForUpload, timeout);  
@@ -76,9 +85,12 @@ module.exports = function(grunt) {
     return splitPath[splitPath.length - 1];
   }
 
-  function filterExists(filepath) {
+  function isFile(filepath) {
     if (!grunt.file.exists(filepath)) {
       grunt.log.warn('Source file "' + filepath + '" not found.');
+      return false;
+    } else if(grunt.file.isDir(filepath)) {
+      grunt.log.warn('"' + filepath + '" is a directory. Please ensure that the file pattern does not include directories.');
       return false;
     }
     return true;
