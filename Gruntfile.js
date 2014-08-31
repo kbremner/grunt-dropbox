@@ -9,7 +9,7 @@
 'use strict';
 
 module.exports = function(grunt) {
-
+  
   // Project configuration.
   grunt.initConfig({
     jshint: {
@@ -30,20 +30,12 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     dropbox: {
-      default_options: {
+      dev: {
         options: {
+          version_name: process.env.TRAVIS_BUILD_ID
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+          'builds': ['dist/test1.txt', 'dist/test2.txt']
         }
       }
     },
