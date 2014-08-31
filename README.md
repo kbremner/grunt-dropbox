@@ -37,17 +37,17 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.version_name
 Type: `String`
-Default value: `',  '`
+Default value: none
 
-A string value that is used to do something with whatever.
+A string value that is used as the name of the folder to upload the build artifacts to, inside the project directory. It is up to the developer to ensure that this is unique. If using Travis CI, it is recommended that this be set to `process.env.TRAVIS_BUILD_ID`.
 
-#### options.punctuation
+#### options.access_token
 Type: `String`
-Default value: `'.'`
+Default value: `process.env.dropbox_access_token`
 
-A string value that is used to do something else with whatever else.
+A string value that is used to authenticate with Dropbox. Note that as this task is meant to be unattended, it is assummed that an access token has already been obtained. See the wiki for more details.
 
 ### Usage Examples
 
