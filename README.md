@@ -1,6 +1,6 @@
 # grunt-dropbox
 
-> Grunt plugin to sync build artifacts to dropbox
+> Grunt plugin for uploading build artifacts to dropbox
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
