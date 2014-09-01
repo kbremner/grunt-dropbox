@@ -84,20 +84,20 @@
 <a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
 
 <h4>
-<a name="optionsseparator" class="anchor" href="#optionsseparator"><span class="octicon octicon-link"></span></a>options.separator</h4>
+<a name="optionsversion_name" class="anchor" href="#optionsversion_name"><span class="octicon octicon-link"></span></a>options.version_name</h4>
 
 <p>Type: <code>String</code>
-Default value: <code>',  '</code></p>
+Default value: none</p>
 
-<p>A string value that is used to do something with whatever.</p>
+<p>A string value that is used as the name of the folder to upload the build artifacts to, inside the project directory. It is up to the developer to ensure that this is unique. If using Travis CI, it is recommended that this be set to <code>process.env.TRAVIS_BUILD_ID</code>.</p>
 
 <h4>
-<a name="optionspunctuation" class="anchor" href="#optionspunctuation"><span class="octicon octicon-link"></span></a>options.punctuation</h4>
+<a name="optionsaccess_token" class="anchor" href="#optionsaccess_token"><span class="octicon octicon-link"></span></a>options.access_token</h4>
 
 <p>Type: <code>String</code>
-Default value: <code>'.'</code></p>
+Default value: <code>process.env.dropbox_access_token</code></p>
 
-<p>A string value that is used to do something else with whatever else.</p>
+<p>A string value that is used to authenticate with Dropbox. Note that as this task is meant to be unattended, it is assummed that an access token has already been obtained. See the wiki for more details.</p>
 
 <h3>
 <a name="usage-examples" class="anchor" href="#usage-examples"><span class="octicon octicon-link"></span></a>Usage Examples</h3>
