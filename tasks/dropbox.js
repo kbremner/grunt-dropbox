@@ -9,7 +9,7 @@
 'use strict';
 
 module.exports = function(grunt) {
-	var dropbox = require('../lib/dropbox');
+  var dropbox = require('../lib/dropbox');
   var dropboxClient = new dropbox();
   
   // Please see the Grunt documentation for more information regarding task
@@ -26,25 +26,23 @@ module.exports = function(grunt) {
     
     verifyOptions(options);
     
-    dropboxClient.getAccountInfo(options, function(err, resp) {
-      if(err) {
-        done();
-        throw err;
-      }
-
+    // get the name of the account holder for debugging
+    var promise = dropboxClient.getAccountInfo(options).then(function(resp) {
       grunt.log.writeln("Uploading to dropbox account for " + resp.display_name + "...");
-      
-      task.files.forEach(function(f) {
-        f.src.filter(isFile).map(function(filepath) {
-          // mark that an upload has started by incrementing an in-flight count
-          count += 1;
-          
+    });
+    
+    // loop through all the file objects
+    task.files.forEach(function(f) {
+      // loop through all the src files, uploading them
+      f.src.filter(isFile).map(function(filepath) {
+        // set the root promise to a continuation
+        promise = promise.then(function() {
           // get the name of the file and construct the url for uploading it
           var filename = getFilename(filepath);
           var dropboxPath = f.dest + "/" + options.version_name + "/" + filepath;
-              
+
           grunt.log.writeln("Uploading " + filepath + " to " + dropboxPath + "...");
-          
+
           // read the file and start the upload, decrementing the in-flight count when complete
           // Use encoding = null to keep the file as a Buffer
           var reqOptions = {
@@ -52,33 +50,18 @@ module.exports = function(grunt) {
             dropboxPath: dropboxPath,
             fileBuffer: grunt.file.read(filepath, { encoding : null })
           }
-          
-          dropboxClient.upload(reqOptions, function(err, resp) {
-            if(err) {
-              done();
-              throw err;
-            }
-            grunt.log.writeln(filename + " uploaded.");
-            count -= 1;
-          });
+
+          // return the upload promise
+          return dropboxClient.upload(reqOptions);
         });
       });
-      
-      // wait for all uploads are complete before marking the task as done
-      var timeout = 1000;
-      function waitForUpload() {
-        if(count === 0) {
-          grunt.log.writeln("All uploads complete.");
-          done();
-        } else {
-        	setTimeout(waitForUpload, timeout);  
-        }
-      }
-      
-      setTimeout(waitForUpload, timeout);
+    });
+    
+    // well all the continuations are done, finish this async task
+    promise.then(function() {
+      done();
     });
   });
-  
   
   function getFilename(filepath) {
     var splitPath = filepath.split("/");
