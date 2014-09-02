@@ -17,7 +17,6 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('dropbox', 'Grunt plugin to sync build artifacts to dropbox', function() {
     var task = this;
     var done = this.async();
-    var count = 0;
     
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
@@ -80,8 +79,7 @@ module.exports = function(grunt) {
   }
   
   function verifyOptions(options) {
-    var optionNames = ['version_name', 'access_token'];
-    optionNames.forEach(function(option) {
+    ['version_name', 'access_token'].forEach(function(option) {
       if(!options[option]) {
         grunt.fail.fatal(option + ' option must be specified');
       }
