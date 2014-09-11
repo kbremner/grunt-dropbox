@@ -34,7 +34,7 @@ An optional string value that is appended to the destination path to differentia
 Type: `String`
 Required: `True`
 
-A string value that is used to authenticate with Dropbox. Note that as this task is meant to be unattended, it is assummed that an access token has already been obtained. See the wiki for more details.
+A string value that is used to authenticate with Dropbox. Note that as this task is meant to be unattended, it is assummed that an access token has already been obtained. See [this wiki page](https://github.com/kbremner/grunt-dropbox/wiki/Creating-a-Dropbox-Access-Token) for more details.
 
 ### Usage Examples
 
