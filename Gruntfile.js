@@ -32,7 +32,8 @@ module.exports = function(grunt) {
     dropbox: {
       dev: {
         options: {
-          version_name: process.env.TRAVIS_BUILD_ID
+          access_token: process.env.dropbox_access_token,
+          version_name: process.env.TRAVIS_BUILD_NUMBER
         },
         files: {
           'grunt-dropbox': ['dist/**/*.*']

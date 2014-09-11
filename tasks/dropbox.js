@@ -9,8 +9,8 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var dropbox = require('../lib/dropbox');
-  var dropboxClient = new dropbox();
+  var Dropbox = require('../lib/dropbox');
+  var dropboxClient = new Dropbox();
   
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
@@ -19,9 +19,7 @@ module.exports = function(grunt) {
     var done = this.async();
     
     // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      access_token: process.env.dropbox_access_token
-    });
+    var options = this.options();
     
     verifyOptions(options);
     
@@ -32,13 +30,18 @@ module.exports = function(grunt) {
     
     // loop through all the file objects
     task.files.forEach(function(f) {
+      // ensure that a destination has been specified
+      if(!f.dest) {
+        grunt.fail.fatal("a destination must be specified for all files"); 
+      }
+      
       // loop through all the src files, uploading them
       f.src.filter(isFile).map(function(filepath) {
         // set the root promise to a continuation
         promise = promise.then(function() {
           // get the name of the file and construct the url for uploading it
           var filename = getFilename(filepath);
-          var dropboxPath = f.dest + "/" + options.version_name + "/" + filepath;
+          var dropboxPath = f.dest + (options.version_name ? ("/" + options.version_name + "/") : "/") + filepath;
 
           grunt.log.writeln("Uploading " + filepath + " to " + dropboxPath + "...");
 
@@ -48,7 +51,7 @@ module.exports = function(grunt) {
             access_token: options.access_token,
             dropboxPath: dropboxPath,
             fileBuffer: grunt.file.read(filepath, { encoding : null })
-          }
+          };
 
           // return the upload promise
           return dropboxClient.upload(reqOptions);
@@ -79,7 +82,7 @@ module.exports = function(grunt) {
   }
   
   function verifyOptions(options) {
-    ['version_name', 'access_token'].forEach(function(option) {
+    ['access_token'].forEach(function(option) {
       if(!options[option]) {
         grunt.fail.fatal(option + ' option must be specified');
       }
