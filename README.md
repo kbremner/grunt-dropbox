@@ -44,9 +44,11 @@ grunt.initConfig({
     options: {
       access_token: '<token>'
     },
-    files: {
-      'uploads/sample-project': ['dist/**/*.*'],
-    },
+    dev: {
+      files: {
+        'uploads/sample-project': ['dist/**/*.*'],
+      }
+    }
   },
 });
 ```
@@ -59,9 +61,11 @@ grunt.initConfig({
       access_token: process.env.dropbox_access_token,
       version_name: process.env.TRAVIS_BUILD_NUMBER
     },
-    files: {
-      'uploads/sample-project': ['dist/*.*'],
-    },
+    dev: {
+      files: {
+        'uploads/sample-project': ['dist/*.*'],
+      }
+    }
   },
 });
 ```
