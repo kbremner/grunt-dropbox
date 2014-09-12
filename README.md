@@ -75,6 +75,10 @@ grunt.initConfig({
 Please feel free to raise issues and submit pull requests. I'll try and reply to issues as quickly as possible.
 
 ## Release History
+* 0.1.2
+  * Made version_name optional
+  * Removed default value for access_token
+  * Updated documentation
 * 0.1.1
   * moved to using promises, other code cleanup
 * 0.1.0
