@@ -19,6 +19,7 @@ grunt.loadNpmTasks('grunt-dropbox');
 
 ## The "dropbox" task
 
+### Files
 When specifying files, the destination must be specified (i.e. specifying the source file only is not supported). The destination is the path from the root of your dropbox directory to upload the local files to.
 
 ### Options
