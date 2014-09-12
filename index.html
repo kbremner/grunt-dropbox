@@ -64,21 +64,9 @@
 <a name="the-dropbox-task" class="anchor" href="#the-dropbox-task"><span class="octicon octicon-link"></span></a>The "dropbox" task</h2>
 
 <h3>
-<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h3>
+<a name="files" class="anchor" href="#files"><span class="octicon octicon-link"></span></a>Files</h3>
 
-<p>In your project's Gruntfile, add a section named <code>dropbox</code> to the data object passed into <code>grunt.initConfig()</code>.</p>
-
-<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
-  <span class="nx">dropbox</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-      <span class="c1">// Task-specific options go here.</span>
-    <span class="p">},</span>
-    <span class="nx">your_target</span><span class="o">:</span> <span class="p">{</span>
-      <span class="c1">// Target-specific file lists and/or options go here.</span>
-    <span class="p">},</span>
-  <span class="p">},</span>
-<span class="p">});</span>
-</pre></div>
+<p>When specifying files, the destination must be specified (i.e. specifying the source file only is not supported). The destination is the path from the root of your dropbox directory to upload the local files to.</p>
 
 <h3>
 <a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
@@ -87,50 +75,50 @@
 <a name="optionsversion_name" class="anchor" href="#optionsversion_name"><span class="octicon octicon-link"></span></a>options.version_name</h4>
 
 <p>Type: <code>String</code>
-Default value: none</p>
+Required: <code>False</code></p>
 
-<p>A string value that is used as the name of the folder to upload the build artifacts to, inside the project directory. It is up to the developer to ensure that this is unique. If using Travis CI, it is recommended that this be set to <code>process.env.TRAVIS_BUILD_ID</code>.</p>
+<p>An optional string value that is appended to the destination path to differentiate artifacts from different builds. If using Travis CI, it is recommended that this be set to <code>process.env.TRAVIS_BUILD_NUMBER</code>.</p>
 
 <h4>
 <a name="optionsaccess_token" class="anchor" href="#optionsaccess_token"><span class="octicon octicon-link"></span></a>options.access_token</h4>
 
 <p>Type: <code>String</code>
-Default value: <code>process.env.dropbox_access_token</code></p>
+Required: <code>True</code></p>
 
-<p>A string value that is used to authenticate with Dropbox. Note that as this task is meant to be unattended, it is assummed that an access token has already been obtained. See the wiki for more details.</p>
+<p>A string value that is used to authenticate with Dropbox. Note that as this task is meant to be unattended, it is assummed that an access token has already been obtained. See <a href="https://github.com/kbremner/grunt-dropbox/wiki/Creating-a-Dropbox-Access-Token">this wiki page</a> for more details.</p>
 
 <h3>
 <a name="usage-examples" class="anchor" href="#usage-examples"><span class="octicon octicon-link"></span></a>Usage Examples</h3>
 
-<h4>
-<a name="default-options" class="anchor" href="#default-options"><span class="octicon octicon-link"></span></a>Default Options</h4>
-
-<p>In this example, the default options are used to do something with whatever. So if the <code>testing</code> file has the content <code>Testing</code> and the <code>123</code> file had the content <code>1 2 3</code>, the generated result would be <code>Testing, 1 2 3.</code></p>
-
-<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
-  <span class="nx">dropbox</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">options</span><span class="o">:</span> <span class="p">{},</span>
-    <span class="nx">files</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s1">'dest/default_options'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'src/testing'</span><span class="p">,</span> <span class="s1">'src/123'</span><span class="p">],</span>
-    <span class="p">},</span>
-  <span class="p">},</span>
-<span class="p">});</span>
-</pre></div>
-
-<h4>
-<a name="custom-options" class="anchor" href="#custom-options"><span class="octicon octicon-link"></span></a>Custom Options</h4>
-
-<p>In this example, custom options are used to do something else with whatever else. So if the <code>testing</code> file has the content <code>Testing</code> and the <code>123</code> file had the content <code>1 2 3</code>, the generated result in this case would be <code>Testing: 1 2 3 !!!</code></p>
+<p>Define a <code>dev</code> task that will upload the <code>dist</code> directory to <code>uploads/sample-project/</code> in the dropbox account associated with the provided token:</p>
 
 <div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
   <span class="nx">dropbox</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-      <span class="nx">separator</span><span class="o">:</span> <span class="s1">': '</span><span class="p">,</span>
-      <span class="nx">punctuation</span><span class="o">:</span> <span class="s1">' !!!'</span><span class="p">,</span>
+      <span class="nx">access_token</span><span class="o">:</span> <span class="s1">'&lt;token&gt;'</span>
     <span class="p">},</span>
-    <span class="nx">files</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s1">'dest/default_options'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'src/testing'</span><span class="p">,</span> <span class="s1">'src/123'</span><span class="p">],</span>
+    <span class="nx">dev</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">files</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s1">'uploads/sample-project'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'dist/**/*.*'</span><span class="p">],</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>Define a <code>dev</code> task that will upload the files in the root of the <code>dist</code> directory to a folder under <code>uploads/sample-project/</code> named after the current travis build number (i.e. for build number 32, the files will be uploaded to <code>uploads/sample-project/32/</code>). The files are uploaded to the dropbox account associated with the access token provided via the dropbox_access_token environment variable:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+  <span class="nx">dropbox</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">access_token</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">dropbox_access_token</span><span class="p">,</span>
+      <span class="nx">version_name</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TRAVIS_BUILD_NUMBER</span>
     <span class="p">},</span>
+    <span class="nx">dev</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">files</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s1">'uploads/sample-project'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'dist/*.*'</span><span class="p">],</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
   <span class="p">},</span>
 <span class="p">});</span>
 </pre></div>
@@ -138,12 +126,33 @@ Default value: <code>process.env.dropbox_access_token</code></p>
 <h2>
 <a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
-<p>In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
+<p>Please feel free to raise issues and submit pull requests. I'll try and reply to issues as quickly as possible.</p>
 
 <h2>
 <a name="release-history" class="anchor" href="#release-history"><span class="octicon octicon-link"></span></a>Release History</h2>
 
-<p><em>(Nothing yet)</em></p>
+<ul>
+<li>0.1.2
+
+<ul>
+<li>Made version_name optional</li>
+<li>Removed default value for access_token</li>
+<li>Updated documentation</li>
+</ul>
+</li>
+<li>0.1.1
+
+<ul>
+<li>moved to using promises, other code cleanup</li>
+</ul>
+</li>
+<li>0.1.0
+
+<ul>
+<li>initial release</li>
+</ul>
+</li>
+</ul>
       </section>
 
     </div>
