@@ -1,7 +1,7 @@
 {
   "name": "grunt-dropbox",
   "description": "Grunt plugin to sync build artifacts to dropbox",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/kbremner/grunt-dropbox",
   "author": {
     "name": "Kyle Bremner",
