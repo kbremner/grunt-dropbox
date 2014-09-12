@@ -38,7 +38,7 @@ A string value that is used to authenticate with Dropbox. Note that as this task
 
 ### Usage Examples
 
-Upload the `dist` directory to `uploads/sample-project/` in the dropbox account associated with the provided token:
+Define a `dev` task that will upload the `dist` directory to `uploads/sample-project/` in the dropbox account associated with the provided token:
 ```js
 grunt.initConfig({
   dropbox: {
@@ -54,7 +54,7 @@ grunt.initConfig({
 });
 ```
 
-Upload the files in the root of the `dist` directory to a folder under `uploads/sample-project/` named after the current travis build number (i.e. for build number 32, the files will be uploaded to `uploads/sample-project/32/`). The files are uploaded to the dropbox account associated with the access token provided via the dropbox\_access\_token environment variable:
+Define a `dev` task that will upload the files in the root of the `dist` directory to a folder under `uploads/sample-project/` named after the current travis build number (i.e. for build number 32, the files will be uploaded to `uploads/sample-project/32/`). The files are uploaded to the dropbox account associated with the access token provided via the dropbox\_access\_token environment variable:
 ```js
 grunt.initConfig({
   dropbox: {
