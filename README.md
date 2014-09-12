@@ -19,71 +19,59 @@ grunt.loadNpmTasks('grunt-dropbox');
 
 ## The "dropbox" task
 
-### Overview
-In your project's Gruntfile, add a section named `dropbox` to the data object passed into `grunt.initConfig()`.
-
-```js
-grunt.initConfig({
-  dropbox: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-});
-```
+When specifying files, the destination must be specified (i.e. specifying the source file only is not supported). The destination is the path from the root of your dropbox directory to upload the local files to.
 
 ### Options
 
 #### options.version_name
 Type: `String`
-Default value: none
+Required: `False`
 
-A string value that is used as the name of the folder to upload the build artifacts to, inside the project directory. It is up to the developer to ensure that this is unique. If using Travis CI, it is recommended that this be set to `process.env.TRAVIS_BUILD_ID`.
+An optional string value that is appended to the destination path to differentiate artifacts from different builds. If using Travis CI, it is recommended that this be set to `process.env.TRAVIS_BUILD_NUMBER`.
 
 #### options.access_token
 Type: `String`
-Default value: `process.env.dropbox_access_token`
+Required: `True`
 
 A string value that is used to authenticate with Dropbox. Note that as this task is meant to be unattended, it is assummed that an access token has already been obtained. See the wiki for more details.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
+Upload the `dist` directory to `uploads/sample-project/` in the dropbox account associated with the provided token:
 ```js
 grunt.initConfig({
   dropbox: {
-    options: {},
+    options: {
+      access_token: '<token>'
+    },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'uploads/sample-project': ['dist/**/*.*'],
     },
   },
 });
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
+Upload the files in the root of the `dist` directory to a folder under `uploads/sample-project/` named after the current travis build number (i.e. for build number 32, the files will be uploaded to `uploads/sample-project/32/`). The files are uploaded to the dropbox account associated with the access token provided via the dropbox\_access\_token environment variable:
 ```js
 grunt.initConfig({
   dropbox: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      'access_token': process.env.dropbox_access_token,
+      'version_name': process.env.TRAVIS_BUILD_NUMBER
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'uploads/sample-project': ['dist/*.*'],
     },
   },
 });
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+Please feel free to raise issues and submit pull requests. I'll try and reply to issues as quickly as possible.
 
 ## Release History
-_(Nothing yet)_
+* 0.1.1
+  * moved to using promises, other code cleanup
+* 0.1.0
+  * initial release
+
