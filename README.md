@@ -56,8 +56,8 @@ Upload the files in the root of the `dist` directory to a folder under `uploads/
 grunt.initConfig({
   dropbox: {
     options: {
-      'access_token': process.env.dropbox_access_token,
-      'version_name': process.env.TRAVIS_BUILD_NUMBER
+      access_token: process.env.dropbox_access_token,
+      version_name: process.env.TRAVIS_BUILD_NUMBER
     },
     files: {
       'uploads/sample-project': ['dist/*.*'],
