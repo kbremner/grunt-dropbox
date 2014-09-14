@@ -82,8 +82,8 @@ Please feel free to raise issues and submit pull requests. I'll try and reply to
 
 ## Release History
 * 0.1.3
-  * Added verbose option, only logs account holder name when this option is set to true (fixes #8)
-  * Fixed the check for a destination so that "" can be specified, allowing upload to the root of the Dropbox account (fixes #10)
+  * Added verbose option, only logs account holder name when this option is set to true (fixes [#8](../../issues/8))
+  * Allow "" to be specified as destination for uploading to root of Dropbox (fixes [#10](../../issues/10))
 * 0.1.2
   * Made version\_name optional
   * Removed default value for access\_token
