@@ -36,6 +36,12 @@ Required: `True`
 
 A string value that is used to authenticate with Dropbox. Note that as this task is meant to be unattended, it is assummed that an access token has already been obtained. See [this wiki page](https://github.com/kbremner/grunt-dropbox/wiki/Creating-a-Dropbox-Access-Token) for more details.
 
+#### options.verbose
+Type: `Boolean`
+Required: `False`
+
+An optional boolean value that is used to determine if additional information should be logged when the task is executed. It is not recommended to enable this option for CI builds as it will log sensitive information, such as the name of the holder of the dropbox account which the access token is associated with.
+
 ### Usage Examples
 
 Define a `dev` task that will upload the `dist` directory to `uploads/sample-project/` in the dropbox account associated with the provided token:
@@ -75,9 +81,12 @@ grunt.initConfig({
 Please feel free to raise issues and submit pull requests. I'll try and reply to issues as quickly as possible.
 
 ## Release History
+* 0.1.3
+  * Added verbose option, only logs account holder name when this option is set to true (fixes #8)
+  * Fixed the check for a destination so that "" can be specified, allowing upload to the root of the Dropbox account (fixes #10)
 * 0.1.2
-  * Made version_name optional
-  * Removed default value for access_token
+  * Made version\_name optional
+  * Removed default value for access\_token
   * Updated documentation
 * 0.1.1
   * moved to using promises, other code cleanup
