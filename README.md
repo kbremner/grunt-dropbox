@@ -81,6 +81,8 @@ grunt.initConfig({
 Please feel free to raise issues and submit pull requests. I'll try and reply to issues as quickly as possible.
 
 ## Release History
+* 0.1.4
+  * Fixed [#11](../../issues/11) which resulted in files being uploaded to an incorrect path
 * 0.1.3
   * Added verbose option, only logs account holder name when this option is set to true (fixes [#8](../../issues/8))
   * Allow "" to be specified as destination for uploading to root of Dropbox (fixes [#10](../../issues/10))
