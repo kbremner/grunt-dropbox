@@ -10,7 +10,7 @@ module.exports = function (grunt) {
   'use strict';
   var Dropbox = require('../lib/dropbox'),
     dropboxClient = new Dropbox();
-  
+
   function getFilename(filepath) {
     var splitPath = filepath.split("/");
     return splitPath[splitPath.length - 1];
@@ -26,14 +26,14 @@ module.exports = function (grunt) {
     }
     return true;
   }
-  
+
   function hasDestination(file) {
     if(file.dest === undefined) {
       grunt.fail.fatal("a destination must be specified for all files");
     }
     return true;
   }
-  
+
   function verifyOptions(options) {
     ['access_token'].forEach(function (option) {
       if (!options[option]) {
@@ -41,13 +41,13 @@ module.exports = function (grunt) {
       }
     });
   }
-  
+
   // returns a function that creates a promise to upload the file to the destination
   function createUploadPromise(filepath, destination, options) {
     return function () {
       // get the name of the file and construct the url for uploading it
       var filename = getFilename(filepath),
-        dropboxPath = destination + (options.version_name ? ("/" + options.version_name + "/") : "/") + filename,
+        dropboxPath = destination + (options.version_name ? ("/" + options.version_name + "/") : "/") + filepath,
         // read the file and start the upload, decrementing the in-flight count when complete
         // Use encoding = null to keep the file as a Buffer
         reqOptions = {
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
         };
 
       grunt.log.writeln("Uploading " + filepath + " to " + dropboxPath + "...");
-      
+
       // return the upload promise
       return dropboxClient.upload(reqOptions);
     };
@@ -69,16 +69,16 @@ module.exports = function (grunt) {
       promise,
       done = this.async(),
       options = this.options({ verbose: false });
-    
+
     verifyOptions(options);
-    
+
     // get the name of the account holder for debugging
     if(options.verbose === true) {
       promise = dropboxClient.getAccountInfo(options).then(function (resp) {
-        grunt.log.writeln("Uploading to dropbox account for " + resp.display_name + "...");
-      }); 
+        grunt.log.writeln("Uploading to dropbox account for " + resp.name.display_name + "...");
+      });
     }
-    
+
     // loop through all the file objects
     task.files.filter(hasDestination).forEach(function (f) {
       // loop through all the src files, uploading them
@@ -94,7 +94,7 @@ module.exports = function (grunt) {
         }
       });
     });
-    
+
     // well all the continuations are done, finish this async task
     promise.then(function () {
       done();
