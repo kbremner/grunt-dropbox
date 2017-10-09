@@ -81,6 +81,8 @@ grunt.initConfig({
 Please feel free to raise issues and submit pull requests. I'll try and reply to issues as quickly as possible.
 
 ## Release History
+* 0.2.0
+  * Uses Dropbox V2 API (PR [#15](../../pull/15))
 * 0.1.4
   * Fixed [#11](../../issues/11) which resulted in files being uploaded to an incorrect path
 * 0.1.3
